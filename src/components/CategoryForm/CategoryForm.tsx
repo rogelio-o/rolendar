@@ -4,6 +4,7 @@ import ICategory from "../../models/ICategory";
 import styles from "./styles";
 import FormButton from "../FormButton";
 import FormInput from "../FormInput";
+import ColorSelector from "../ColorSelector";
 
 interface IProp {
   initialCategory?: ICategory;
@@ -36,6 +37,10 @@ export default class CategoryForm extends React.Component<IProp, IState> {
           placeholder="Name"
           onChangeText={name => this.setState({ name })}
           value={this.state.name}
+        />
+        <ColorSelector
+          initialValue={this.state.color}
+          onChangeValue={color => this.setState({ color })}
         />
         <FormButton title="Send" onPress={() => this.submit()} />
       </View>
