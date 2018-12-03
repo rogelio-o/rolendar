@@ -22,6 +22,21 @@ const DAYS_OF_WEEK: string[] = [
   "Sun",
 ];
 
+const MONTHS_OF_YEAR: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dic",
+];
+
 export class Week extends React.Component<IProp, IState> {
   constructor(props: IProp) {
     super(props);
@@ -66,13 +81,7 @@ export class Week extends React.Component<IProp, IState> {
   }
 
   private getMonth(date: Date): string {
-    return (
-      date.toLocaleString("en", {
-        month: "short",
-      }) +
-      " " +
-      date.getFullYear()
-    );
+    return MONTHS_OF_YEAR[date.getMonth()] + " " + date.getFullYear();
   }
 
   public getDayComponent(date: Date, index: number): JSX.Element {

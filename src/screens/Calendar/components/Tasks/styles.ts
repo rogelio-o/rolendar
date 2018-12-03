@@ -1,34 +1,29 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
+  quickActionsContainer: {
     flex: 1,
+    alignItems: "flex-end",
   },
-  taskContainer: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  headerContainer: {
+  quickActionsInnerContainer: {
+    flex: 1,
     flexDirection: "row",
+    width: 124,
   },
-  doneIconContainer: {
-    paddingRight: 10,
-    width: 35,
-  },
-  doneIcon: {
-    fontSize: 32,
-  },
-  nameContainer: {
+  quickActionsItemContainer: {
+    flex: 1,
+    padding: 15,
     justifyContent: "center",
+    alignItems: "center",
   },
-  nameText: {
-    fontSize: 16,
+  quickActionsDeleteContainer: {
+    backgroundColor: "tomato",
   },
-  descriptionContainer: {
-    marginTop: 5,
+  quickActionsUpdateSubtasksContainer: {
+    backgroundColor: "blue",
   },
-  descriptionText: {
-    color: "#999",
+  quickActionsIcon: {
+    fontSize: 32,
+    color: "#fff",
   },
 });

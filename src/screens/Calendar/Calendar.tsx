@@ -35,6 +35,7 @@ export default class Calendar extends React.Component<{}, IState> {
           description: "Test Description",
           done: false,
           category: { name: "Test Category", color: "#f00" },
+          hasSubtasks: true,
           subtasks: [
             {
               id: "1",
@@ -42,6 +43,7 @@ export default class Calendar extends React.Component<{}, IState> {
               description: "Test Description 1",
               done: true,
               category: { name: "Test Category", color: "#f00" },
+              hasSubtasks: false,
               subtasks: [],
             },
             {
@@ -50,6 +52,7 @@ export default class Calendar extends React.Component<{}, IState> {
               description: "Test Description 1",
               done: true,
               category: { name: "Test Category", color: "#f00" },
+              hasSubtasks: false,
               subtasks: [],
             },
           ],
@@ -60,6 +63,7 @@ export default class Calendar extends React.Component<{}, IState> {
           description: "Test Description",
           done: true,
           category: { name: "Test Category", color: "#f00" },
+          hasSubtasks: false,
           subtasks: [],
         },
       ],

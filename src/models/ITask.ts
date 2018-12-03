@@ -11,5 +11,7 @@ export interface ITask {
 
   done: boolean;
 
+  hasSubtasks: boolean;
+
   subtasks: ITask[];
 }
