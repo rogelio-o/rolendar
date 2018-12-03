@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     backgroundColor: "tomato",
-    paddingTop: 15,
+    marginTop: 25,
+    paddingTop: 10,
     paddingBottom: 15,
   },
   header: {
@@ -35,7 +36,7 @@ export default StyleSheet.create({
   },
   daysContainer: {
     flexDirection: "row",
-    marginTop: 15,
+    marginTop: 10,
   },
   daysInnerContainer: {
     flex: 1,
@@ -45,7 +46,6 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 20,
     padding: 5,
   },
   activeDayContainer: {
