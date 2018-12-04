@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { DAYS_OF_WEEK } from "../../../utils/dateUtils";
 import IWeekDay from "../../../models/IWeekDay";
@@ -10,6 +10,7 @@ interface IProp {
 
 interface IState {
   weekDay: IWeekDay;
+  loading: boolean;
 }
 
 export default class WeekDay extends React.Component<IProp, IState> {
@@ -18,14 +19,19 @@ export default class WeekDay extends React.Component<IProp, IState> {
 
     this.state = {
       weekDay: { day: props.day },
+      loading: false,
     };
   }
 
   public render() {
     const weekDay: IWeekDay = this.state.weekDay;
+    const loading: boolean = this.state.loading;
 
     return (
-      <TouchableOpacity onPress={() => console.log("OK")}>
+      <TouchableOpacity
+        onPress={() => this.setState({ loading: true })}
+        disabled={loading}
+      >
         <View style={styles.container}>
           <View
             style={[
@@ -38,18 +44,23 @@ export default class WeekDay extends React.Component<IProp, IState> {
                   },
             ]}
           >
-            <Text
-              style={[
-                styles.dayText,
-                weekDay.category === undefined
-                  ? styles.unselectedDayText
-                  : {
-                      color: weekDay.category.color,
-                    },
-              ]}
-            >
-              {DAYS_OF_WEEK[weekDay.day]}
-            </Text>
+            {loading ? (
+              <ActivityIndicator
+                style={styles.activityIndicator}
+                color={weekDay.category === undefined ? "black" : "white"}
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.dayText,
+                  weekDay.category === undefined
+                    ? styles.unselectedDayText
+                    : styles.selectedDayText,
+                ]}
+              >
+                {DAYS_OF_WEEK[weekDay.day]}
+              </Text>
+            )}
           </View>
           <View style={styles.categoryContainer}>
             <Text

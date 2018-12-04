@@ -22,6 +22,9 @@ export default StyleSheet.create({
   unselectedDayText: {
     color: "black",
   },
+  selectedDayText: {
+    color: "white",
+  },
   categoryContainer: {
     flex: 1,
     justifyContent: "center",
@@ -34,4 +37,5 @@ export default StyleSheet.create({
   selectedCategoryText: {
     color: "black",
   },
+  activityIndicator: {},
 });
