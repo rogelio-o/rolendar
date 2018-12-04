@@ -24,6 +24,7 @@ export default StyleSheet.create({
   },
   selectedDayText: {
     color: "white",
+    fontWeight: "bold",
   },
   categoryContainer: {
     flex: 1,
