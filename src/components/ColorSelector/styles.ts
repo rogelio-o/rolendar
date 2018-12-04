@@ -18,9 +18,17 @@ export default StyleSheet.create({
     marginRight: 6,
     borderRadius: 8,
   },
-  modalContainer: {},
-  modalScrollViewContainer: {},
+  modalContainer: {
+    flex: 1,
+  },
+  modalScrollViewContainer: {
+    flex: 1,
+  },
   modalRow: {
     height: 60,
   },
+  listViewContainer: {
+    flex: 1,
+  },
+  buttonContainer: {},
 });

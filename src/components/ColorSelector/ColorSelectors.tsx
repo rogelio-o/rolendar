@@ -11,6 +11,7 @@ import {
   ListViewDataSource,
 } from "react-native";
 import styles from "./styles";
+import COLORS from "../../config/colors";
 
 interface IProp {
   initialValue: string;
@@ -22,8 +23,6 @@ interface IState {
   open: boolean;
   colors: ListViewDataSource;
 }
-
-const COLORS: string[] = ["#f00", "#0f0"];
 
 export default class ColorSelector extends React.Component<IProp, IState> {
   constructor(props: IProp) {
@@ -76,15 +75,19 @@ export default class ColorSelector extends React.Component<IProp, IState> {
           animationType="slide"
           transparent={false}
           visible={this.state.open}
+          onRequestClose={() => {
+            /**/
+          }}
         >
           <SafeAreaView style={styles.modalContainer}>
             <ScrollView style={styles.modalScrollViewContainer}>
               <ListView
                 dataSource={this.state.colors}
                 renderRow={(rowData: any) => this.renderRow(rowData)}
+                style={styles.listViewContainer}
               />
             </ScrollView>
-            <View>
+            <View style={styles.buttonContainer}>
               <Button
                 title="Cancel"
                 color="tomato"
