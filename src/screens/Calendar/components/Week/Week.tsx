@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
+import { DAYS_OF_WEEK, MONTHS_OF_YEAR } from "../../../../utils/dateUtils";
 
 interface IProp {
   initialDate: Date;
@@ -11,31 +12,6 @@ interface IProp {
 interface IState {
   selectedDate: Date;
 }
-
-const DAYS_OF_WEEK: string[] = [
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat",
-  "Sun",
-];
-
-const MONTHS_OF_YEAR: string[] = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dic",
-];
 
 export class Week extends React.Component<IProp, IState> {
   constructor(props: IProp) {
