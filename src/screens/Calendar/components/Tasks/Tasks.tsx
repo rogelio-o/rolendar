@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ITask } from "../../../../models/ITask";
 import Task from "../Task";
 import styles from "./styles";
+import { createDataSource } from "../../../../utils/listsUtils";
 
 interface IProp {
   initialTasks: ITask[];
@@ -29,22 +30,8 @@ export default class Tasks extends React.Component<IProp, IState> {
 
     const ds = SwipeableListView.getNewDataSource();
     this.state = {
-      tasks: this.createDataSource(ds, this._data),
+      tasks: createDataSource(ds, this._data),
     };
-  }
-
-  private createDataSource(
-    ds: SwipeableListViewDataSource,
-    initialTasks: ITask[]
-  ): SwipeableListViewDataSource {
-    const dataBlob: { [key: string]: ITask } = {};
-    const rowsIds: string[] = [];
-    initialTasks.forEach(task => {
-      dataBlob[task.id] = task;
-      rowsIds.push(task.id);
-    });
-
-    return ds.cloneWithRowsAndSections({ "0": dataBlob }, ["0"], [rowsIds]);
   }
 
   public quickActions(
@@ -96,7 +83,7 @@ export default class Tasks extends React.Component<IProp, IState> {
     const newData = this._data.filter(t => t.id !== rowID);
     this._data = newData;
     this.setState({
-      tasks: this.createDataSource(this.state.tasks, this._data),
+      tasks: createDataSource(this.state.tasks, this._data),
     });
   }
 

@@ -1,10 +1,27 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
+  container: {},
+  quickActionsContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    alignItems: "flex-end",
+  },
+  quickActionsInnerContainer: {
+    flex: 1,
+    flexDirection: "row",
+    width: 124,
+  },
+  quickActionsItemContainer: {
+    flex: 1,
+    padding: 15,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  quickActionsDeleteContainer: {
+    backgroundColor: "tomato",
+  },
+  quickActionsIcon: {
+    fontSize: 32,
+    color: "#fff",
   },
 });
