@@ -11,14 +11,16 @@ import { NavigationScreenProps } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { createDataSource } from "../../utils/listsUtils";
-import Category from "./components/Category";
 import ICategory from "../../models/ICategory";
 import {
   deleteCategory,
   findAllCategories,
 } from "../../repositories/categoryRepository";
+import Loading from "../../components/Loading";
+import CategoryItem from "../../components/CategoryItem";
 
 interface IState {
+  loading: boolean;
   categories: SwipeableListViewDataSource | null;
 }
 
@@ -30,21 +32,29 @@ export default class Categories extends React.Component<
     super(props);
 
     this.state = {
+      loading: false,
       categories: null,
     };
   }
 
   public componentDidMount() {
     this.loadCategories();
+
+    this.props.navigation.setParams({
+      loadCategories: this.loadCategories.bind(this),
+    });
   }
 
   public loadCategories() {
+    this.setState({ loading: true });
+
     findAllCategories().then(categories => {
       const ds =
         this.state.categories === null
           ? SwipeableListView.getNewDataSource()
           : this.state.categories;
       this.setState({
+        loading: false,
         categories: createDataSource(ds, categories),
       });
     });
@@ -96,12 +106,11 @@ export default class Categories extends React.Component<
 
     return (
       <SafeAreaView style={styles.container}>
-        {categories === null ? (
-          <View />
-        ) : (
+        <Loading visible={this.state.loading} />
+        {categories === null ? null : (
           <SwipeableListView
             dataSource={categories}
-            renderRow={row => <Category category={row} />}
+            renderRow={row => <CategoryItem category={row} />}
             bounceFirstRowOnMount={true}
             maxSwipeDistance={62}
             renderQuickActions={(

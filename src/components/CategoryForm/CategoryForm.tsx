@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { NavigationScreenProp, NavigationRoute } from "react-navigation";
+import uuidv4 from "uuid/v4";
 import ICategory from "../../models/ICategory";
 import styles from "./styles";
 import FormButton from "../FormButton";
@@ -47,6 +48,7 @@ export default class CategoryForm extends React.Component<IProp, IState> {
         color: this.state.color,
       })
       .then(() => {
+        this.props.navigation.getParam("loadCategories")();
         this.props.navigation.goBack();
       })
       .catch(() => {
@@ -55,7 +57,9 @@ export default class CategoryForm extends React.Component<IProp, IState> {
   }
 
   private getId(): string {
-    return this.props.initialCategory ? this.props.initialCategory.id : "";
+    return this.props.initialCategory
+      ? this.props.initialCategory.id
+      : uuidv4();
   }
 
   public render() {

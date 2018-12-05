@@ -13,6 +13,7 @@ export default StyleSheet.create({
   },
   innerContainer: {
     position: "absolute",
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
     top: 0,
     bottom: 0,
     left: 0,
@@ -38,5 +39,6 @@ export default StyleSheet.create({
     height: 50,
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
   },
 });

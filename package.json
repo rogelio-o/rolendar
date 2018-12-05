@@ -17,13 +17,15 @@
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-animate-loading-button": "^1.0.3",
-    "react-navigation": "^3.0.4"
+    "react-navigation": "^3.0.4",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/expo__vector-icons": "^6.2.3",
     "@types/react": "^16.7.11",
     "@types/react-native": "^0.57.15",
     "@types/react-navigation": "^2.13.7",
+    "@types/uuid": "^3.4.4",
     "babel-preset-expo": "^5.0.0",
     "jest": "^23.6.0",
     "prettier": "^1.15.3",

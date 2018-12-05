@@ -7,10 +7,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import styles from "./styles";
-import { DAYS_OF_WEEK } from "../../../utils/dateUtils";
-import IWeekDay from "../../../models/IWeekDay";
+import { DAYS_OF_WEEK } from "../../../../utils/dateUtils";
+import IWeekDay from "../../../../models/IWeekDay";
 import CategorySelector from "../CategorySelector";
-import ICategory from "../../../models/ICategory";
+import ICategory from "../../../../models/ICategory";
+import {
+  findWeekDayByDay,
+  saveWeekDay,
+} from "../../../../repositories/weekDayRepository";
 
 interface IProp {
   day: number;
@@ -33,6 +37,14 @@ export default class WeekDay extends React.Component<IProp, IState> {
     };
   }
 
+  public componentDidMount() {
+    this.setState({ loading: true });
+
+    findWeekDayByDay(this.state.weekDay.day).then(weekDay => {
+      this.setState({ loading: false, weekDay });
+    });
+  }
+
   private changeCategory(category: ICategory): Promise<void> {
     this.closeSelector();
 
@@ -40,9 +52,14 @@ export default class WeekDay extends React.Component<IProp, IState> {
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const weekDay: IWeekDay = this.state.weekDay;
-        weekDay.category = category;
-        this.setState({ loading: false, weekDay }, () => resolve());
+        const oldWeekDay: IWeekDay = this.state.weekDay;
+        const weekDay: IWeekDay = { ...oldWeekDay, category };
+
+        saveWeekDay(weekDay)
+          .then(() => {
+            this.setState({ loading: false, weekDay }, () => resolve());
+          })
+          .catch(() => this.setState({ loading: false }));
       }, 500);
     });
   }
@@ -115,6 +132,9 @@ export default class WeekDay extends React.Component<IProp, IState> {
           animationType="slide"
           transparent={false}
           visible={this.state.selectorOpen}
+          onRequestClose={() => {
+            /**/
+          }}
         >
           <CategorySelector
             day={weekDay.day}

@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import styles from "./styles";
 import { NavigationScreenProps } from "react-navigation";
-import WeekDay from "./WeekDay";
+import WeekDay from "./components/WeekDay";
 
 const DAYS: number[] = [0, 1, 2, 3, 4, 5, 6];
 

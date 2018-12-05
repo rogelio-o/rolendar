@@ -32,21 +32,4 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  itemContainer: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    backgroundColor: "white",
-    flexDirection: "row",
-  },
-  itemColorContainer: {
-    width: 20,
-    height: 20,
-  },
-  itemTextContainer: {
-    paddingLeft: 10,
-  },
-  itemText: {
-    fontSize: 16,
-  },
 });

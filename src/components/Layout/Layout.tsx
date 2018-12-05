@@ -46,7 +46,11 @@ export default createAppContainer(
               },
               headerRight: (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("CreateCategory")}
+                  onPress={() =>
+                    navigation.navigate("CreateCategory", {
+                      loadCategories: navigation.getParam("loadCategories"),
+                    })
+                  }
                   style={{ paddingRight: 15 }}
                 >
                   <Ionicons name="ios-add" size={32} color="white" />
