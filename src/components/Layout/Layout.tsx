@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import {
   createBottomTabNavigator,
   createStackNavigator,
@@ -15,6 +15,7 @@ import Tasks from "../../screens/Tasks";
 import Settings from "../../screens/Settings";
 import CreateCategory from "../../screens/CreateCategory";
 import UpdateCategory from "../../screens/UpdateCategory/UpdateCategory";
+import CreateTask from "../../screens/CreateTask";
 
 export default createAppContainer(
   createBottomTabNavigator(
@@ -81,8 +82,35 @@ export default createAppContainer(
           },
           Tasks: {
             screen: Tasks,
+            navigationOptions: ({
+              navigation,
+            }: {
+              navigation: NavigationScreenProp<NavigationRoute>;
+            }) => ({
+              title: `Tasks of ${navigation.getParam("category").name}`,
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "tomato",
+              },
+              headerRight: (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("CreateTask", {
+                      loadTasks: navigation.getParam("loadTasks"),
+                      category: navigation.getParam("category"),
+                    })
+                  }
+                  style={{ paddingRight: 15 }}
+                >
+                  <Ionicons name="ios-add" size={32} color="white" />
+                </TouchableOpacity>
+              ),
+            }),
+          },
+          CreateTask: {
+            screen: CreateTask,
             navigationOptions: () => ({
-              title: "Tasks",
+              title: "New Task",
               headerTintColor: "white",
               headerStyle: {
                 backgroundColor: "tomato",

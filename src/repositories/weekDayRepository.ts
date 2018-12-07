@@ -25,5 +25,5 @@ export const saveWeekDay = async (weekDay: IWeekDay): Promise<void> => {
     ? weekDay.category.id
     : undefined;
   const raw: IWeekDayRaw = { categoryId };
-  AsyncStorage.setItem(KEY + weekDay.day, JSON.stringify(raw));
+  await AsyncStorage.setItem(KEY + weekDay.day, JSON.stringify(raw));
 };

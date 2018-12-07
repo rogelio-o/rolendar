@@ -9,7 +9,7 @@ export default StyleSheet.create({
   quickActionsInnerContainer: {
     flex: 1,
     flexDirection: "row",
-    width: 124,
+    width: 186,
   },
   quickActionsItemContainer: {
     flex: 1,
@@ -22,6 +22,9 @@ export default StyleSheet.create({
   },
   quickActionsUpdateContainer: {
     backgroundColor: "blue",
+  },
+  quickActionsTasksContainer: {
+    backgroundColor: "yellow",
   },
   quickActionsIcon: {
     fontSize: 32,

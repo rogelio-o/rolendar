@@ -1,5 +1,6 @@
 import { AsyncStorage } from "react-native";
 import ICategory from "../models/ICategory";
+import { deleteAllTasksByCategory } from "./tasksRepository";
 
 const KEY: string = "CATEGORIES";
 const CATEGORIES: { [name: string]: ICategory } = {};
@@ -26,13 +27,15 @@ const load = async (): Promise<void> => {
 export async function deleteCategory(id: string): Promise<void> {
   delete CATEGORIES[id];
 
-  save();
+  await deleteAllTasksByCategory(id);
+
+  await save();
 }
 
 export async function saveCategory(category: ICategory) {
   CATEGORIES[category.id] = category;
 
-  save();
+  await save();
 }
 
 export async function findCategoryById(id: string) {

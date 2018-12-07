@@ -71,6 +71,19 @@ export default class Categories extends React.Component<
           <TouchableOpacity
             style={[
               styles.quickActionsItemContainer,
+              styles.quickActionsTasksContainer,
+            ]}
+            onPress={() =>
+              this.props.navigation.navigate("Tasks", {
+                category: rowData,
+              })
+            }
+          >
+            <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.quickActionsItemContainer,
               styles.quickActionsUpdateContainer,
             ]}
             onPress={() =>
@@ -121,12 +134,13 @@ export default class Categories extends React.Component<
     return (
       <SafeAreaView style={styles.container}>
         <Loading visible={this.state.loading} />
-        {categories === null ? null : (
+        {categories === null ||
+        categories.getDataSource().getRowCount() === 0 ? null : (
           <SwipeableListView
             dataSource={categories}
             renderRow={row => <CategoryItem category={row} />}
             bounceFirstRowOnMount={true}
-            maxSwipeDistance={124}
+            maxSwipeDistance={186}
             renderQuickActions={(
               rowData: any,
               sectionID: string | number,

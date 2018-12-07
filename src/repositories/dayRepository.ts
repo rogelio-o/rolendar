@@ -39,5 +39,5 @@ export const saveDay = async (day: IDay): Promise<void> => {
     tasksIds: day.tasks.map(t => t.id),
   };
 
-  AsyncStorage.setItem(KEY + formatDate(day.date), JSON.stringify(raw));
+  await AsyncStorage.setItem(KEY + formatDate(day.date), JSON.stringify(raw));
 };

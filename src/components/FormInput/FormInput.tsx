@@ -6,6 +6,7 @@ interface IProp {
   placeholder: string;
   value: string;
   onChangeText: (value: string) => void;
+  multiline?: boolean;
 }
 
 export default class FormInput extends React.Component<IProp> {
@@ -15,6 +16,7 @@ export default class FormInput extends React.Component<IProp> {
         placeholder={this.props.placeholder}
         value={this.props.value}
         onChangeText={this.props.onChangeText}
+        multiline={this.props.multiline}
         style={styles.input}
       />
     );
