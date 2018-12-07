@@ -9,7 +9,7 @@ import {
 import styles from "./styles";
 import { DAYS_OF_WEEK } from "../../../../utils/dateUtils";
 import IWeekDay from "../../../../models/IWeekDay";
-import CategorySelector from "../CategorySelector";
+import CategorySelector from "../../../../components/CategorySelector";
 import ICategory from "../../../../models/ICategory";
 import {
   findWeekDayByDay,
@@ -137,7 +137,7 @@ export default class WeekDay extends React.Component<IProp, IState> {
           }}
         >
           <CategorySelector
-            day={weekDay.day}
+            title={DAYS_OF_WEEK[weekDay.day]}
             close={() => this.setState({ selectorOpen: false })}
             selectCategory={category => this.changeCategory(category)}
           />

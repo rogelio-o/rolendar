@@ -4,7 +4,7 @@ import { ITask } from "./ITask";
 export default interface IDay {
   date: Date;
 
-  category: ICategory;
+  category?: ICategory;
 
   tasks: ITask[];
 }

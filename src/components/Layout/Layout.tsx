@@ -14,6 +14,7 @@ import Categories from "../../screens/Categories";
 import Tasks from "../../screens/Tasks";
 import Settings from "../../screens/Settings";
 import CreateCategory from "../../screens/CreateCategory";
+import UpdateCategory from "../../screens/UpdateCategory/UpdateCategory";
 
 export default createAppContainer(
   createBottomTabNavigator(
@@ -62,6 +63,16 @@ export default createAppContainer(
             screen: CreateCategory,
             navigationOptions: () => ({
               title: "New Category",
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "tomato",
+              },
+            }),
+          },
+          UpdateCategory: {
+            screen: UpdateCategory,
+            navigationOptions: () => ({
+              title: "Update Category",
               headerTintColor: "white",
               headerStyle: {
                 backgroundColor: "tomato",

@@ -6,6 +6,7 @@ import styles from "./styles";
 
 interface IProp {
   category: ICategory;
+  onUpdateCategory: () => void;
 }
 
 export default class Category extends React.Component<IProp> {
@@ -23,7 +24,7 @@ export default class Category extends React.Component<IProp> {
           <Text style={styles.nameText}>{category.name}</Text>
         </View>
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={() => console.log("Update")}>
+          <TouchableOpacity onPress={() => this.props.onUpdateCategory()}>
             <Ionicons name="ios-more" style={styles.icon} />
           </TouchableOpacity>
         </View>

@@ -71,6 +71,20 @@ export default class Categories extends React.Component<
           <TouchableOpacity
             style={[
               styles.quickActionsItemContainer,
+              styles.quickActionsUpdateContainer,
+            ]}
+            onPress={() =>
+              this.props.navigation.navigate("UpdateCategory", {
+                categoryId: rowID,
+                loadCategories: () => this.loadCategories(),
+              })
+            }
+          >
+            <Ionicons name="md-create" style={[styles.quickActionsIcon]} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.quickActionsItemContainer,
               styles.quickActionsDeleteContainer,
             ]}
             onPress={() => this.askDeleteCategory(rowID)}
@@ -112,7 +126,7 @@ export default class Categories extends React.Component<
             dataSource={categories}
             renderRow={row => <CategoryItem category={row} />}
             bounceFirstRowOnMount={true}
-            maxSwipeDistance={62}
+            maxSwipeDistance={124}
             renderQuickActions={(
               rowData: any,
               sectionID: string | number,

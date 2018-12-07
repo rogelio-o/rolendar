@@ -5,9 +5,12 @@ import Week from "./components/Week";
 import IDay from "../../models/IDay";
 import NoDay from "./components/NoDay";
 import DayView from "./components/DayView/DayView";
+import { findDayByDate, saveDay } from "../../repositories/dayRepository";
+import Loading from "../../components/Loading";
 
 interface IState {
   selectedDate: Date;
+  loading: boolean;
   day?: IDay;
 }
 
@@ -21,58 +24,35 @@ export default class Calendar extends React.Component<{}, IState> {
 
     this.state = {
       selectedDate: this.initialDate,
+      loading: false,
     };
   }
 
   public componentDidMount() {
-    const day: IDay = {
-      date: new Date(),
-      category: { name: "Test Category", color: "#f00" },
-      tasks: [
-        {
-          id: "3",
-          name: "Test Task",
-          description: "Test Description",
-          done: false,
-          category: { name: "Test Category", color: "#f00" },
-          hasSubtasks: true,
-          subtasks: [
-            {
-              id: "1",
-              name: "Test Subtask 1",
-              description: "Test Description 1",
-              done: true,
-              category: { name: "Test Category", color: "#f00" },
-              hasSubtasks: false,
-              subtasks: [],
-            },
-            {
-              id: "2",
-              name: "Test Subtask 1",
-              description: "Test Description 1",
-              done: true,
-              category: { name: "Test Category", color: "#f00" },
-              hasSubtasks: false,
-              subtasks: [],
-            },
-          ],
-        },
-        {
-          id: "4",
-          name: "Test Task 2",
-          description: "Test Description",
-          done: true,
-          category: { name: "Test Category", color: "#f00" },
-          hasSubtasks: false,
-          subtasks: [],
-        },
-      ],
-    };
-    this.setState({ day });
+    this.loadDay();
+  }
+
+  private loadDay() {
+    this.setState({ loading: true });
+    findDayByDate(this.state.selectedDate)
+      .then(day => this.setState({ loading: false, day }))
+      .catch(() => this.setState({ loading: false }));
   }
 
   private onDateSelection(selectedDate: Date): void {
-    this.setState({ selectedDate });
+    this.setState({ selectedDate }, () => this.loadDay());
+  }
+
+  private updateDay(newDay: IDay): Promise<void> {
+    this.setState({ loading: true });
+    return saveDay(newDay)
+      .then(() =>
+        this.setState({
+          loading: false,
+          day: newDay,
+        })
+      )
+      .catch(() => this.setState({ loading: false }));
   }
 
   public render() {
@@ -80,11 +60,16 @@ export default class Calendar extends React.Component<{}, IState> {
 
     return (
       <SafeAreaView style={styles.container}>
+        <Loading visible={this.state.loading} />
         <Week
           initialDate={this.initialDate}
           onDateSelection={date => this.onDateSelection(date)}
         />
-        {day ? <DayView day={day} /> : <NoDay />}
+        {day ? (
+          <DayView updateDay={newDay => this.updateDay(newDay)} day={day} />
+        ) : (
+          <NoDay />
+        )}
       </SafeAreaView>
     );
   }

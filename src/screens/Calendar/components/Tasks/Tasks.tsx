@@ -90,18 +90,22 @@ export default class Tasks extends React.Component<IProp, IState> {
   public render() {
     const tasks: SwipeableListViewDataSource = this.state.tasks;
 
-    return (
-      <SwipeableListView
-        dataSource={tasks}
-        renderRow={row => <Task initialTask={row} />}
-        bounceFirstRowOnMount={true}
-        maxSwipeDistance={124}
-        renderQuickActions={(
-          rowData: any,
-          sectionID: string | number,
-          rowID: string | number
-        ) => this.quickActions(rowData, sectionID, rowID)}
-      />
-    );
+    if (tasks.getDataSource().getRowCount() === 0) {
+      return null;
+    } else {
+      return (
+        <SwipeableListView
+          dataSource={tasks}
+          renderRow={row => <Task initialTask={row} />}
+          bounceFirstRowOnMount={true}
+          maxSwipeDistance={124}
+          renderQuickActions={(
+            rowData: any,
+            sectionID: string | number,
+            rowID: string | number
+          ) => this.quickActions(rowData, sectionID, rowID)}
+        />
+      );
+    }
   }
 }

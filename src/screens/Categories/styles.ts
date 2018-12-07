@@ -20,6 +20,9 @@ export default StyleSheet.create({
   quickActionsDeleteContainer: {
     backgroundColor: "tomato",
   },
+  quickActionsUpdateContainer: {
+    backgroundColor: "blue",
+  },
   quickActionsIcon: {
     fontSize: 32,
     color: "#fff",

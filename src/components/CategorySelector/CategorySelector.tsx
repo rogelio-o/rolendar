@@ -6,15 +6,14 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import ICategory from "../../../../models/ICategory";
+import ICategory from "../../models/ICategory";
 import styles from "./styles";
-import { DAYS_OF_WEEK } from "../../../../utils/dateUtils";
-import { findAllCategories } from "../../../../repositories/categoryRepository";
-import Loading from "../../../../components/Loading";
-import CategoryItem from "../../../../components/CategoryItem";
+import { findAllCategories } from "../../repositories/categoryRepository";
+import Loading from "../../components/Loading";
+import CategoryItem from "../../components/CategoryItem";
 
 interface IProp {
-  day: number;
+  title: string;
   selectCategory: (category: ICategory) => Promise<void>;
   close: () => void;
 }
@@ -59,9 +58,7 @@ export default class CategorySelector extends React.Component<IProp, IState> {
         <View style={styles.headerContainer}>
           <View style={styles.headerButtonContainer} />
           <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>
-              {DAYS_OF_WEEK[this.props.day]}
-            </Text>
+            <Text style={styles.headerText}>{this.props.title}</Text>
           </View>
           <View style={styles.headerButtonContainer}>
             <TouchableOpacity onPress={() => this.props.close()}>

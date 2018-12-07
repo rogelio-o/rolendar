@@ -14,12 +14,10 @@ export default class CreateCategory extends React.Component<
 
   public render() {
     return (
-      <View>
-        <CategoryForm
-          submit={category => this.submit(category)}
-          navigation={this.props.navigation}
-        />
-      </View>
+      <CategoryForm
+        submit={category => this.submit(category)}
+        navigation={this.props.navigation}
+      />
     );
   }
 }
