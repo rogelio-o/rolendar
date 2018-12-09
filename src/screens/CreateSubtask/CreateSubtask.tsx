@@ -1,28 +1,33 @@
 import React from "react";
-import { addTask } from "../../repositories/tasksRepository";
+import { addSubtask } from "../../repositories/tasksRepository";
 import { ITask } from "../../models/ITask";
 import { NavigationScreenProps } from "react-navigation";
 import TaskForm from "../../components/TaskForm";
 
-export default class CreateTask extends React.Component<NavigationScreenProps> {
-  private async submit(task: ITask): Promise<void> {
-    await addTask(task);
+export default class CreateSubtask extends React.Component<
+  NavigationScreenProps
+> {
+  private async submit(subtask: ITask): Promise<void> {
+    const task: ITask = this.props.navigation.getParam("task");
+
+    await addSubtask(task.id, subtask);
   }
 
   public render() {
     const navigation = this.props.navigation;
+    const task: ITask = navigation.getParam("task");
     const initialTask: ITask = {
       id: "",
       name: "",
       description: "",
-      category: navigation.getParam("category"),
+      category: task.category,
       done: false,
       subtasks: [],
     };
 
     return (
       <TaskForm
-        submit={task => this.submit(task)}
+        submit={subtask => this.submit(subtask)}
         initialTask={initialTask}
         navigation={navigation}
       />

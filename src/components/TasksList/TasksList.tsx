@@ -19,6 +19,7 @@ import { NavigationScreenProps } from "react-navigation";
 
 interface IProp extends NavigationScreenProps {
   taskGetter: () => Promise<ITask[]>;
+  isSubtask: boolean;
 }
 
 interface IState {
@@ -69,7 +70,28 @@ export default class TasksList extends React.Component<IProp, IState> {
   ): JSX.Element {
     return (
       <View style={styles.quickActionsContainer}>
-        <View style={styles.quickActionsInnerContainer}>
+        <View
+          style={
+            this.props.isSubtask
+              ? styles.quickActionsInnerSubtasksContainer
+              : styles.quickActionsInnerContainer
+          }
+        >
+          {this.props.isSubtask ? null : (
+            <TouchableOpacity
+              style={[
+                styles.quickActionsItemContainer,
+                styles.quickActionsSubtasksContainer,
+              ]}
+              onPress={() =>
+                this.props.navigation.navigate("Subtasks", {
+                  task: rowData,
+                })
+              }
+            >
+              <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={[
               styles.quickActionsItemContainer,
@@ -127,7 +149,7 @@ export default class TasksList extends React.Component<IProp, IState> {
             dataSource={tasks}
             renderRow={row => <TaskItem task={row} />}
             bounceFirstRowOnMount={true}
-            maxSwipeDistance={124}
+            maxSwipeDistance={this.props.isSubtask ? 124 : 186}
             renderQuickActions={(
               rowData: any,
               sectionID: string | number,

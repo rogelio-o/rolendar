@@ -14,11 +14,6 @@ export default StyleSheet.create({
     flexDirection: "row",
     width: 186,
   },
-  quickActionsInnerSubtasksContainer: {
-    flex: 1,
-    flexDirection: "row",
-    width: 124,
-  },
   quickActionsItemContainer: {
     flex: 1,
     padding: 15,
@@ -27,12 +22,6 @@ export default StyleSheet.create({
   },
   quickActionsDeleteContainer: {
     backgroundColor: "tomato",
-  },
-  quickActionsUpdateContainer: {
-    backgroundColor: "blue",
-  },
-  quickActionsSubtasksContainer: {
-    backgroundColor: "yellow",
   },
   quickActionsIcon: {
     fontSize: 32,

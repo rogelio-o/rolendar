@@ -13,6 +13,12 @@ export default class Tasks extends React.Component<NavigationScreenProps> {
   }
 
   public render() {
-    return <TasksList taskGetter={() => this.loadTasks()} {...this.props} />;
+    return (
+      <TasksList
+        taskGetter={() => this.loadTasks()}
+        isSubtask={false}
+        {...this.props}
+      />
+    );
   }
 }

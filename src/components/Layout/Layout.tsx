@@ -17,6 +17,8 @@ import CreateCategory from "../../screens/CreateCategory";
 import UpdateCategory from "../../screens/UpdateCategory/UpdateCategory";
 import CreateTask from "../../screens/CreateTask";
 import UpdateTask from "../../screens/UpdateTask/UpdateTask";
+import Subtasks from "../../screens/Subtasks";
+import CreateSubtask from "../../screens/CreateSubtask";
 
 export default createAppContainer(
   createBottomTabNavigator(
@@ -122,6 +124,47 @@ export default createAppContainer(
             screen: UpdateTask,
             navigationOptions: () => ({
               title: "Update Task",
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "tomato",
+              },
+            }),
+          },
+          Subtasks: {
+            screen: Subtasks,
+            navigationOptions: ({
+              navigation,
+            }: {
+              navigation: NavigationScreenProp<NavigationRoute>;
+            }) => ({
+              title: `Subtasks of ${navigation.getParam("task").name}`,
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "tomato",
+              },
+              headerRight: (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("CreateSubtask", {
+                      loadTasks: navigation.getParam("loadTasks"),
+                      task: navigation.getParam("task"),
+                    })
+                  }
+                  style={{ paddingRight: 15 }}
+                >
+                  <Ionicons name="ios-add" size={32} color="white" />
+                </TouchableOpacity>
+              ),
+            }),
+          },
+          CreateSubtask: {
+            screen: CreateSubtask,
+            navigationOptions: ({
+              navigation,
+            }: {
+              navigation: NavigationScreenProp<NavigationRoute>;
+            }) => ({
+              title: `New Subtask of ${navigation.getParam("task").name}`,
               headerTintColor: "white",
               headerStyle: {
                 backgroundColor: "tomato",

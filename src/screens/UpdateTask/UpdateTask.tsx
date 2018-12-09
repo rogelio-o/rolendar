@@ -1,5 +1,5 @@
 import React from "react";
-import { saveTask, findTaskById } from "../../repositories/tasksRepository";
+import { updateTask, findTaskById } from "../../repositories/tasksRepository";
 import { ITask } from "../../models/ITask";
 import TaskForm from "../../components/TaskForm";
 import { NavigationScreenProps } from "react-navigation";
@@ -33,7 +33,7 @@ export default class UpdateTask extends React.Component<
   }
 
   private async submit(task: ITask): Promise<void> {
-    await saveTask(task);
+    await updateTask(task);
   }
 
   public render() {

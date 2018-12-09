@@ -117,8 +117,18 @@ const addToCategory = async (
   }
 };
 
-export const saveTask = async (task: ITask): Promise<void> => {
-  const raw: ITaskRaw = {
+const addToTask = async (taskId: string, subtaskId: string): Promise<void> => {
+  const raw: ITaskRaw = await _findRawTaskById(taskId);
+
+  if (raw.subtasksIds.indexOf(subtaskId) === -1) {
+    raw.subtasksIds.push(subtaskId);
+
+    await AsyncStorage.setItem(KEY + taskId, JSON.stringify(raw));
+  }
+};
+
+const toRaw = (task: ITask): ITaskRaw => {
+  return {
     id: task.id,
     name: task.name,
     description: task.description,
@@ -126,7 +136,27 @@ export const saveTask = async (task: ITask): Promise<void> => {
     done: task.done,
     subtasksIds: task.subtasks.map(t => t.id),
   };
+};
+
+export const addTask = async (task: ITask): Promise<void> => {
+  const raw: ITaskRaw = toRaw(task);
 
   await AsyncStorage.setItem(KEY + task.id, JSON.stringify(raw));
   await addToCategory(task.category.id, task.id);
+};
+
+export const addSubtask = async (
+  taskId: string,
+  subtask: ITask
+): Promise<void> => {
+  const raw: ITaskRaw = toRaw(subtask);
+
+  await AsyncStorage.setItem(KEY + subtask.id, JSON.stringify(raw));
+  await addToTask(taskId, subtask.id);
+};
+
+export const updateTask = async (task: ITask): Promise<void> => {
+  const raw: ITaskRaw = toRaw(task);
+
+  await AsyncStorage.setItem(KEY + task.id, JSON.stringify(raw));
 };
