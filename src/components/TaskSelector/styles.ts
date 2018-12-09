@@ -3,35 +3,8 @@ import styleColors from "../../config/styleColors";
 
 export default StyleSheet.create({
   container: {
-    paddingBottom: 25,
-  },
-  innerContainer: {
-    marginBottom: 25,
-    backgroundColor: "white",
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    padding: 6,
-    flexDirection: "row",
-  },
-  text: {
-    color: "#bbb",
-  },
-  circle: {
-    width: 15,
-    height: 15,
-    marginRight: 6,
-    borderRadius: 8,
-  },
-  modalContainer: {
     flex: 1,
     backgroundColor: styleColors.main,
-  },
-  modalScrollViewContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  modalRow: {
-    height: 60,
   },
   headerContainer: {
     flexDirection: "row",
@@ -55,5 +28,18 @@ export default StyleSheet.create({
     color: "white",
     fontSize: 16,
     justifyContent: "center",
+  },
+  listContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  itemContainer: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: styleColors.softGray,
+    backgroundColor: "white",
+  },
+  itemText: {
+    fontSize: 16,
   },
 });

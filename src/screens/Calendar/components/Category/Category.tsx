@@ -7,6 +7,7 @@ import styles from "./styles";
 interface IProp {
   category: ICategory;
   onUpdateCategory: () => void;
+  onAddTask: () => void;
 }
 
 export default class Category extends React.Component<IProp> {
@@ -16,7 +17,7 @@ export default class Category extends React.Component<IProp> {
     return (
       <View style={[styles.container, { backgroundColor: category.color }]}>
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={() => console.log("Add")}>
+          <TouchableOpacity onPress={() => this.props.onAddTask()}>
             <Ionicons name="ios-add" style={styles.icon} />
           </TouchableOpacity>
         </View>

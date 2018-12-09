@@ -82,20 +82,22 @@ export default class ColorSelector extends React.Component<IProp, IState> {
           }}
         >
           <SafeAreaView style={styles.modalContainer}>
-            <ScrollView style={styles.modalScrollViewContainer}>
-              <ListView
-                dataSource={this.state.colors}
-                renderRow={(rowData: any) => this.renderRow(rowData)}
-                style={styles.listViewContainer}
-              />
-            </ScrollView>
-            <View style={styles.buttonContainer}>
-              <Button
-                title="Cancel"
-                color={styleColors.main}
-                onPress={() => this.close()}
-              />
+            <View style={styles.headerContainer}>
+              <View style={styles.headerButtonContainer} />
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>Select a color</Text>
+              </View>
+              <View style={styles.headerButtonContainer}>
+                <TouchableOpacity onPress={() => this.close()}>
+                  <Text style={styles.headerButton}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+            <ListView
+              dataSource={this.state.colors}
+              renderRow={(rowData: any) => this.renderRow(rowData)}
+              style={styles.modalScrollViewContainer}
+            />
           </SafeAreaView>
         </Modal>
       </View>

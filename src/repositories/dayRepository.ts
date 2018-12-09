@@ -4,6 +4,7 @@ import IDayRaw from "../models/storage/IDayRaw";
 import { findWeekDayByDay } from "./weekDayRepository";
 import IWeekDay from "../models/IWeekDay";
 import { findCategoryById } from "./categoryRepository";
+import { findTaskById } from "./tasksRepository";
 
 const KEY = "DAY:";
 
@@ -31,7 +32,7 @@ export const findDayByDate = async (date: Date): Promise<IDay> => {
       category: raw.categoryId
         ? await findCategoryById(raw.categoryId)
         : undefined,
-      tasks: [] /* TODO */,
+      tasks: await Promise.all(raw.tasksIds.map(findTaskById)),
     };
   }
 };

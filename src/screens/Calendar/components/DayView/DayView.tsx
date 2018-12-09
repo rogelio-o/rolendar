@@ -8,6 +8,9 @@ import FormButton from "../../../../components/FormButton";
 import CategorySelector from "../../../../components/CategorySelector";
 import ICategory from "../../../../models/ICategory";
 import { DAYS_OF_WEEK, MONTHS_OF_YEAR } from "../../../../utils/dateUtils";
+import { ITask } from "../../../../models/ITask";
+import TaskSelector from "../../../../components/TaskSelector";
+import { findTasksByCategory } from "../../../../repositories/tasksRepository";
 
 interface IProp {
   day: IDay;
@@ -16,6 +19,7 @@ interface IProp {
 
 interface IState {
   updateCategoryVisible: boolean;
+  addTaskVisible: boolean;
 }
 
 const formatTitle = (date: Date): string => {
@@ -36,6 +40,7 @@ export default class DayView extends React.Component<IProp, IState> {
 
     this.state = {
       updateCategoryVisible: false,
+      addTaskVisible: false,
     };
   }
 
@@ -48,6 +53,7 @@ export default class DayView extends React.Component<IProp, IState> {
           <Category
             category={day.category}
             onUpdateCategory={() => this.openUpdateCategory()}
+            onAddTask={() => this.openAddTask()}
           />
           <Tasks initialTasks={day.tasks} />
         </ScrollView>
@@ -76,6 +82,14 @@ export default class DayView extends React.Component<IProp, IState> {
 
   private closeUpdateCategory() {
     this.setState({ updateCategoryVisible: false });
+  }
+
+  private openAddTask() {
+    this.setState({ addTaskVisible: true });
+  }
+
+  private closeAddTask() {
+    this.setState({ addTaskVisible: false });
   }
 
   private changeCategory(category: ICategory): Promise<void> {
@@ -118,8 +132,20 @@ export default class DayView extends React.Component<IProp, IState> {
     }
   }
 
+  private addTask(task: ITask): Promise<void> {
+    const newDay: IDay = { ...this.props.day };
+    newDay.tasks.push(task);
+
+    return this.props.updateDay(newDay).then(() =>
+      this.setState({
+        addTaskVisible: false,
+      })
+    );
+  }
+
   public render() {
     const day: IDay = this.props.day;
+    const category: ICategory | undefined = day.category;
 
     return (
       <View style={styles.container}>
@@ -135,9 +161,26 @@ export default class DayView extends React.Component<IProp, IState> {
           <CategorySelector
             title={formatTitle(day.date)}
             close={() => this.closeUpdateCategory()}
-            selectCategory={category => this.askChangeCategory(category)}
+            selectCategory={c => this.askChangeCategory(c)}
           />
         </Modal>
+        {category ? (
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.addTaskVisible}
+            onRequestClose={() => {
+              /**/
+            }}
+          >
+            <TaskSelector
+              title={formatTitle(day.date)}
+              close={() => this.closeAddTask()}
+              selectTask={task => this.addTask(task)}
+              tasksGetter={() => findTasksByCategory(category)}
+            />
+          </Modal>
+        ) : null}
       </View>
     );
   }
