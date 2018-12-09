@@ -17,7 +17,10 @@ export const findDayByDate = async (date: Date): Promise<IDay> => {
   const str: string | null = await AsyncStorage.getItem(KEY + formatDate(date));
 
   if (str === null) {
-    const weekDay: IWeekDay = await findWeekDayByDay(date.getDay());
+    const baseZeroWeekDay = date.getDay();
+    const weekDay: IWeekDay = await findWeekDayByDay(
+      baseZeroWeekDay === 0 ? 6 : baseZeroWeekDay - 1
+    );
 
     return { date, category: weekDay.category, tasks: [] };
   } else {
