@@ -174,7 +174,7 @@ export default class DayView extends React.Component<IProp, IState> {
             }}
           >
             <TaskSelector
-              title={formatTitle(day.date)}
+              title={formatTitle(day.date) + ` (${category.name})`}
               close={() => this.closeAddTask()}
               selectTask={task => this.addTask(task)}
               tasksGetter={() => findTasksByCategory(category)}
