@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../config/styleColors";
 
 export default StyleSheet.create({
   container: {
@@ -26,16 +27,16 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   quickActionsDeleteContainer: {
-    backgroundColor: "tomato",
+    backgroundColor: styleColors.danger,
   },
   quickActionsUpdateContainer: {
-    backgroundColor: "blue",
+    backgroundColor: styleColors.info,
   },
   quickActionsSubtasksContainer: {
-    backgroundColor: "yellow",
+    backgroundColor: styleColors.warning,
   },
   quickActionsIcon: {
-    fontSize: 32,
+    fontSize: 25,
     color: "#fff",
   },
 });

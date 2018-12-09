@@ -3,6 +3,7 @@ import { View } from "react-native";
 // @ts-ignore
 import AnimateLoadingButton from "react-native-animate-loading-button";
 import styles from "./styles";
+import styleColors from "../../config/styleColors";
 
 interface IProp {
   title: string;
@@ -25,12 +26,12 @@ export default class FormButton extends React.Component<IProp> {
         <AnimateLoadingButton
           ref={this.loadingButton}
           title={this.props.title}
-          color="tomato"
+          color={styleColors.main}
           width={300}
           height={50}
           titleFontSize={16}
           titleColor="#fff"
-          backgroundColor="tomato"
+          backgroundColor={styleColors.main}
           onPress={this.props.onPress}
           disabled={this.props.loading}
         />

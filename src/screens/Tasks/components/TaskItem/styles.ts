@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../../../config/styleColors";
 
 export default StyleSheet.create({
   taskContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: styleColors.softGray,
     backgroundColor: "white",
   },
   taskInnerContainer: {
@@ -17,7 +18,7 @@ export default StyleSheet.create({
   },
   doneIcon: {
     fontSize: 32,
-    color: "tomato",
+    color: styleColors.main,
   },
   nameContainer: {
     justifyContent: "center",
@@ -29,6 +30,6 @@ export default StyleSheet.create({
     marginTop: 5,
   },
   descriptionText: {
-    color: "#999",
+    color: styleColors.gray,
   },
 });

@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../config/styleColors";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "tomato",
+    backgroundColor: styleColors.main,
   },
 });

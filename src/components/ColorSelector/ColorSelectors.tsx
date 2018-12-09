@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import COLORS from "../../config/colors";
+import styleColors from "../../config/styleColors";
 
 interface IProp {
   initialValue: string;
@@ -90,7 +91,7 @@ export default class ColorSelector extends React.Component<IProp, IState> {
             <View style={styles.buttonContainer}>
               <Button
                 title="Cancel"
-                color="tomato"
+                color={styleColors.main}
                 onPress={() => this.close()}
               />
             </View>

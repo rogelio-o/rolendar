@@ -19,6 +19,7 @@ import CreateTask from "../../screens/CreateTask";
 import UpdateTask from "../../screens/UpdateTask/UpdateTask";
 import Subtasks from "../../screens/Subtasks";
 import CreateSubtask from "../../screens/CreateSubtask";
+import styleColors from "../../config/styleColors";
 
 export default createAppContainer(
   createBottomTabNavigator(
@@ -47,7 +48,7 @@ export default createAppContainer(
               title: "Categories",
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
               headerRight: (
                 <TouchableOpacity
@@ -69,7 +70,7 @@ export default createAppContainer(
               title: "New Category",
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
             }),
           },
@@ -79,7 +80,7 @@ export default createAppContainer(
               title: "Update Category",
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
             }),
           },
@@ -93,7 +94,7 @@ export default createAppContainer(
               title: `Tasks of ${navigation.getParam("category").name}`,
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
               headerRight: (
                 <TouchableOpacity
@@ -116,7 +117,7 @@ export default createAppContainer(
               title: "New Task",
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
             }),
           },
@@ -126,7 +127,7 @@ export default createAppContainer(
               title: "Update Task",
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
             }),
           },
@@ -140,7 +141,7 @@ export default createAppContainer(
               title: `Subtasks of ${navigation.getParam("task").name}`,
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
               headerRight: (
                 <TouchableOpacity
@@ -167,7 +168,7 @@ export default createAppContainer(
               title: `New Subtask of ${navigation.getParam("task").name}`,
               headerTintColor: "white",
               headerStyle: {
-                backgroundColor: "tomato",
+                backgroundColor: styleColors.main,
               },
             }),
           },
@@ -203,10 +204,13 @@ export default createAppContainer(
       tabBarOptions: {
         showLabel: true,
         showIcon: true,
-        inactiveBackgroundColor: "tomato",
+        inactiveBackgroundColor: styleColors.main,
         activeBackgroundColor: "#ff8e7a",
         activeTintColor: "white",
         inactiveTintColor: "white",
+        style: {
+          backgroundColor: styleColors.main,
+        },
       },
     }
   )

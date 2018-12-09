@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../../../config/styleColors";
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: "tomato",
+    backgroundColor: styleColors.main,
     marginTop: 25,
     paddingTop: 10,
     paddingBottom: 15,
@@ -68,13 +69,13 @@ export default StyleSheet.create({
     color: "white",
   },
   activeWeekDay: {
-    color: "tomato",
+    color: styleColors.main,
   },
   dayMonthDay: {
     textAlign: "center",
     color: "white",
   },
   activeMonthDay: {
-    color: "tomato",
+    color: styleColors.main,
   },
 });
