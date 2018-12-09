@@ -1,20 +1,17 @@
 import React from "react";
+import { saveTask, findTaskById } from "../../repositories/tasksRepository";
+import { ITask } from "../../models/ITask";
+import TaskForm from "../../components/TaskForm";
 import { NavigationScreenProps } from "react-navigation";
-import ICategory from "../../models/ICategory";
-import CategoryForm from "../../components/CategoryForm/CategoryForm";
-import {
-  saveCategory,
-  findCategoryById,
-} from "../../repositories/categoryRepository";
 import { View } from "react-native";
 import Loading from "../../components/Loading";
 
 interface IState {
   loading: boolean;
-  category?: ICategory;
+  task?: ITask;
 }
 
-export default class UpdateCategory extends React.Component<
+export default class UpdateTask extends React.Component<
   NavigationScreenProps,
   IState
 > {
@@ -28,28 +25,28 @@ export default class UpdateCategory extends React.Component<
 
   public componentDidMount() {
     this.setState({ loading: true });
-    findCategoryById(this.props.navigation.getParam("categoryId"))
-      .then(category => this.setState({ category, loading: false }))
+    findTaskById(this.props.navigation.getParam("taskId"))
+      .then(task => this.setState({ task, loading: false }))
       .catch(() =>
         this.setState({ loading: false }, () => this.props.navigation.goBack())
       );
   }
 
-  private async submit(category: ICategory): Promise<void> {
-    await saveCategory(category);
+  private async submit(task: ITask): Promise<void> {
+    await saveTask(task);
   }
 
   public render() {
     const loading: boolean = this.state.loading;
-    const category: ICategory | undefined = this.state.category;
+    const task: ITask | undefined = this.state.task;
 
     return (
       <View>
         <Loading visible={loading} />
 
-        {category ? (
-          <CategoryForm
-            initialCategory={category}
+        {task ? (
+          <TaskForm
+            initialTask={task}
             submit={c => this.submit(c)}
             navigation={this.props.navigation}
           />

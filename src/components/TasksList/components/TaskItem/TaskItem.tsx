@@ -3,13 +3,14 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { ITask } from "../../../../models/ITask";
+import { saveTask } from "../../../../repositories/tasksRepository";
 
 interface IProp {
-  initialTask: ITask;
+  task: ITask;
 }
 
 interface IState {
-  task: ITask;
+  done: boolean;
 }
 
 export default class TaskItem extends React.Component<IProp, IState> {
@@ -17,19 +18,20 @@ export default class TaskItem extends React.Component<IProp, IState> {
     super(props);
 
     this.state = {
-      task: props.initialTask,
+      done: props.task.done,
     };
   }
 
   private toggleDone() {
-    const task: ITask = this.state.task;
-    task.done = !task.done;
+    const done: boolean = this.state.done;
+    const task: ITask = this.props.task;
+    task.done = !done;
 
-    this.setState({ task });
+    saveTask(task).then(() => this.setState({ done: !done }));
   }
 
   public render() {
-    const task: ITask = this.state.task;
+    const task: ITask = this.props.task;
 
     return (
       <View style={styles.taskContainer}>

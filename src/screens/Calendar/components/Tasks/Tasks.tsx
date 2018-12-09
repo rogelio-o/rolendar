@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ITask } from "../../../../models/ITask";
-import Task from "../Task";
 import styles from "./styles";
 import { createDataSource } from "../../../../utils/listsUtils";
+import Task from "../Task";
 
 interface IProp {
   initialTasks: ITask[];
@@ -42,17 +42,15 @@ export default class Tasks extends React.Component<IProp, IState> {
     return (
       <View style={styles.quickActionsContainer}>
         <View style={styles.quickActionsInnerContainer}>
-          {rowData.hasSubtasks ? (
-            <TouchableOpacity
-              style={[
-                styles.quickActionsItemContainer,
-                styles.quickActionsUpdateSubtasksContainer,
-              ]}
-              onPress={() => this.askUnattachTask(rowID)}
-            >
-              <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
-            </TouchableOpacity>
-          ) : null}
+          <TouchableOpacity
+            style={[
+              styles.quickActionsItemContainer,
+              styles.quickActionsUpdateSubtasksContainer,
+            ]}
+            onPress={() => this.askUnattachTask(rowID)}
+          >
+            <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
+          </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.quickActionsItemContainer,

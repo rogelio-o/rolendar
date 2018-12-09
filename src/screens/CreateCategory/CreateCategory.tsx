@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import CategoryForm from "../../components/CategoryForm";
 import { saveCategory } from "../../repositories/categoryRepository";

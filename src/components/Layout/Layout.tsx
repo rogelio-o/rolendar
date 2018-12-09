@@ -16,6 +16,7 @@ import Settings from "../../screens/Settings";
 import CreateCategory from "../../screens/CreateCategory";
 import UpdateCategory from "../../screens/UpdateCategory/UpdateCategory";
 import CreateTask from "../../screens/CreateTask";
+import UpdateTask from "../../screens/UpdateTask/UpdateTask";
 
 export default createAppContainer(
   createBottomTabNavigator(
@@ -111,6 +112,16 @@ export default createAppContainer(
             screen: CreateTask,
             navigationOptions: () => ({
               title: "New Task",
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "tomato",
+              },
+            }),
+          },
+          UpdateTask: {
+            screen: UpdateTask,
+            navigationOptions: () => ({
+              title: "Update Task",
               headerTintColor: "white",
               headerStyle: {
                 backgroundColor: "tomato",
