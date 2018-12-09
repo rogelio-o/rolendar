@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import styleColor from "../../../../config/styleColors";
 
 export default StyleSheet.create({
   taskContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: styleColor.softGray,
     backgroundColor: "white",
   },
   taskInnerContainer: {
@@ -28,6 +29,6 @@ export default StyleSheet.create({
     marginTop: 5,
   },
   descriptionText: {
-    color: "#999",
+    color: styleColor.gray,
   },
 });

@@ -5,7 +5,7 @@ export default StyleSheet.create({
   taskContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: styleColors.softGray,
     backgroundColor: "white",
   },
   taskInnerContainer: {

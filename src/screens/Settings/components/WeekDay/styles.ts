@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../../../config/styleColors";
 
 export default StyleSheet.create({
   container: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: styleColors.softGray,
     backgroundColor: "white",
     flexDirection: "row",
   },
@@ -16,7 +17,7 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   unselectedDayContainer: {
-    borderColor: "#ccc",
+    borderColor: styleColors.gray,
   },
   dayText: {},
   unselectedDayText: {
@@ -33,7 +34,7 @@ export default StyleSheet.create({
   },
   categoryText: {},
   unselectedCategoryText: {
-    color: "#ccc",
+    color: styleColors.gray,
   },
   selectedCategoryText: {
     color: "black",

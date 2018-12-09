@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
+    paddingBottom: 25,
+  },
+  innerContainer: {
     marginBottom: 25,
     backgroundColor: "white",
     borderBottomColor: "#ccc",

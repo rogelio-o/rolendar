@@ -63,14 +63,15 @@ export default class ColorSelector extends React.Component<IProp, IState> {
 
   public render() {
     return (
-      <View>
-        <TouchableOpacity onPress={() => this.open()}>
-          <View style={styles.container}>
-            <View
-              style={[styles.circle, { backgroundColor: this.state.value }]}
-            />
-            <Text style={styles.text}>Color</Text>
-          </View>
+      <View style={{ marginBottom: 25 }}>
+        <TouchableOpacity
+          onPress={() => this.open()}
+          style={styles.innerContainer}
+        >
+          <View
+            style={[styles.circle, { backgroundColor: this.state.value }]}
+          />
+          <Text style={styles.text}>Color</Text>
         </TouchableOpacity>
         <Modal
           animationType="slide"

@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import styleColors from "../../config/styleColors";
 
 export default StyleSheet.create({
   itemContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: styleColors.softGray,
     backgroundColor: "white",
     flexDirection: "row",
   },
