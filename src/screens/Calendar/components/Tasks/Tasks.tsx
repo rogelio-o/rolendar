@@ -13,7 +13,8 @@ import { createDataSource } from "../../../../utils/listsUtils";
 import Task from "../Task";
 
 interface IProp {
-  initialTasks: ITask[];
+  tasks: ITask[];
+  deleteTask: (taskId: string) => void;
 }
 
 interface IState {
@@ -21,17 +22,23 @@ interface IState {
 }
 
 export default class Tasks extends React.Component<IProp, IState> {
-  private _data: ITask[];
-
   constructor(props: IProp) {
     super(props);
 
-    this._data = props.initialTasks;
-
     const ds = SwipeableListView.getNewDataSource();
     this.state = {
-      tasks: createDataSource(ds, this._data),
+      tasks: createDataSource(ds, props.tasks),
     };
+  }
+
+  public componentDidUpdate(prevProps: IProp) {
+    if (
+      this.props.tasks.length !== this.state.tasks.getDataSource().getRowCount()
+    ) {
+      this.setState({
+        tasks: createDataSource(this.state.tasks, this.props.tasks),
+      });
+    }
   }
 
   public quickActions(
@@ -78,11 +85,7 @@ export default class Tasks extends React.Component<IProp, IState> {
   }
 
   public unattachTask(rowID: string | number): void {
-    const newData = this._data.filter(t => t.id !== rowID);
-    this._data = newData;
-    this.setState({
-      tasks: createDataSource(this.state.tasks, this._data),
-    });
+    this.props.deleteTask(rowID as string);
   }
 
   public render() {

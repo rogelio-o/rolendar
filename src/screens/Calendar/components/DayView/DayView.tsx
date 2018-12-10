@@ -55,7 +55,10 @@ export default class DayView extends React.Component<IProp, IState> {
             onUpdateCategory={() => this.openUpdateCategory()}
             onAddTask={() => this.openAddTask()}
           />
-          <Tasks initialTasks={day.tasks} />
+          <Tasks
+            tasks={day.tasks}
+            deleteTask={taskId => this.deleteTask(taskId)}
+          />
         </ScrollView>
       );
     } else {
@@ -141,6 +144,13 @@ export default class DayView extends React.Component<IProp, IState> {
         addTaskVisible: false,
       })
     );
+  }
+
+  private deleteTask(taskId: string): void {
+    const newDay: IDay = { ...this.props.day };
+    newDay.tasks = newDay.tasks.filter(t => t.id !== taskId);
+
+    this.props.updateDay(newDay);
   }
 
   public render() {
