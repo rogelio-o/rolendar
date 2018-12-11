@@ -153,6 +153,7 @@ export default class DayView extends React.Component<IProp, IState> {
   private deleteTask(taskId: string): void {
     const newDay: IDay = { ...this.props.day };
     newDay.tasks = newDay.tasks.filter(t => t.id !== taskId);
+    delete newDay.subtasksIds[taskId];
 
     this.props.updateDay(newDay);
   }
