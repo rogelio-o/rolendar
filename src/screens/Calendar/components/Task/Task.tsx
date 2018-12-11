@@ -4,9 +4,11 @@ import { Ionicons } from "@expo/vector-icons";
 import SubTasks from "../SubTasks";
 import styles from "./styles";
 import { ITask } from "../../../../models/ITask";
+import { updateTask } from "../../../../repositories/tasksRepository";
 
 interface IProp {
   initialTask: ITask;
+  subtasksIds?: string[];
 }
 
 interface IState {
@@ -23,14 +25,19 @@ export default class Task extends React.Component<IProp, IState> {
   }
 
   private toggleDone() {
-    const task: ITask = this.state.task;
+    const task: ITask = { ...this.state.task };
     task.done = !task.done;
 
-    this.setState({ task });
+    updateTask(task).then(() => {
+      this.setState({ task });
+    });
   }
 
   public render() {
     const task: ITask = this.state.task;
+    const subtasksIds: string[] = this.props.subtasksIds
+      ? this.props.subtasksIds
+      : [];
 
     return (
       <View style={styles.taskContainer}>
@@ -53,7 +60,11 @@ export default class Task extends React.Component<IProp, IState> {
           </View>
         </View>
         {task.subtasks.length > 0 ? (
-          <SubTasks subtasks={task.subtasks} />
+          <SubTasks
+            subtasks={task.subtasks.filter(
+              subtask => subtasksIds.indexOf(subtask.id) !== -1
+            )}
+          />
         ) : null}
       </View>
     );

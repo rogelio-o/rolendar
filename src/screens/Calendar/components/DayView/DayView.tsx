@@ -57,6 +57,10 @@ export default class DayView extends React.Component<IProp, IState> {
           />
           <Tasks
             tasks={day.tasks}
+            subtasksIds={day.subtasksIds ? day.subtasksIds : {}} // TODO remove conditional
+            toggleAttachSubtask={(task, subtask) =>
+              this.toggleAttachSubtask(task, subtask)
+            }
             deleteTask={taskId => this.deleteTask(taskId)}
           />
         </ScrollView>
@@ -153,6 +157,22 @@ export default class DayView extends React.Component<IProp, IState> {
     this.props.updateDay(newDay);
   }
 
+  public toggleAttachSubtask(task: ITask, subtask: ITask): Promise<void> {
+    const newDay: IDay = { ...this.props.day };
+    if (!newDay.subtasksIds) newDay.subtasksIds = {}; // TODO remove this condition
+    if (!newDay.subtasksIds[task.id]) {
+      newDay.subtasksIds[task.id] = [];
+    }
+    const indexSubtask = newDay.subtasksIds[task.id].indexOf(subtask.id);
+    if (indexSubtask === -1) {
+      newDay.subtasksIds[task.id].push(subtask.id);
+    } else {
+      newDay.subtasksIds[task.id].splice(indexSubtask, 1);
+    }
+
+    return this.props.updateDay(newDay);
+  }
+
   public render() {
     const day: IDay = this.props.day;
     const category: ICategory | undefined = day.category;
@@ -187,7 +207,13 @@ export default class DayView extends React.Component<IProp, IState> {
               title={formatTitle(day.date) + ` (${category.name})`}
               close={() => this.closeAddTask()}
               selectTask={task => this.addTask(task)}
-              tasksGetter={() => findTasksByCategory(category)}
+              tasksGetter={() =>
+                findTasksByCategory(category).then(tasks =>
+                  tasks.filter(
+                    t => day.tasks.findIndex(t2 => t.id === t2.id) === -1
+                  )
+                )
+              }
             />
           </Modal>
         ) : null}

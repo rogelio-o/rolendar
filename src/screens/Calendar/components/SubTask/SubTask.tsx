@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { ITask } from "../../../../models/ITask";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
+import { updateTask } from "../../../../repositories/tasksRepository";
 
 interface IProp {
   initialSubTask: ITask;
@@ -22,10 +23,12 @@ export default class SubTask extends React.Component<IProp, IState> {
   }
 
   private toggleDone() {
-    const subtask: ITask = this.state.subtask;
+    const subtask: ITask = { ...this.state.subtask };
     subtask.done = !subtask.done;
 
-    this.setState({ subtask });
+    updateTask(subtask).then(() => {
+      this.setState({ subtask });
+    });
   }
 
   public render() {

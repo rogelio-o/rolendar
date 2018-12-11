@@ -5,20 +5,25 @@ import {
   TouchableOpacity,
   View,
   SwipeableListViewDataSource,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ITask } from "../../../../models/ITask";
 import styles from "./styles";
 import { createDataSource } from "../../../../utils/listsUtils";
+import TaskSelector from "../../../../components/TaskSelector";
 import Task from "../Task";
 
 interface IProp {
   tasks: ITask[];
+  subtasksIds: { [key: string]: string[] };
   deleteTask: (taskId: string) => void;
+  toggleAttachSubtask: (task: ITask, subtask: ITask) => Promise<void>;
 }
 
 interface IState {
   tasks: SwipeableListViewDataSource;
+  subtaskSelection?: ITask;
 }
 
 export default class Tasks extends React.Component<IProp, IState> {
@@ -46,18 +51,21 @@ export default class Tasks extends React.Component<IProp, IState> {
     sectionID: string | number,
     rowID: string | number
   ): JSX.Element {
+    const hasSubtasks: boolean = rowData.subtasks.length > 0;
     return (
       <View style={styles.quickActionsContainer}>
         <View style={styles.quickActionsInnerContainer}>
-          <TouchableOpacity
-            style={[
-              styles.quickActionsItemContainer,
-              styles.quickActionsUpdateSubtasksContainer,
-            ]}
-            onPress={() => this.askUnattachTask(rowID)}
-          >
-            <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
-          </TouchableOpacity>
+          {hasSubtasks ? (
+            <TouchableOpacity
+              style={[
+                styles.quickActionsItemContainer,
+                styles.quickActionsUpdateSubtasksContainer,
+              ]}
+              onPress={() => this.openSubtaskSelection(rowData)}
+            >
+              <Ionicons name="ios-list" style={[styles.quickActionsIcon]} />
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity
             style={[
               styles.quickActionsItemContainer,
@@ -88,24 +96,71 @@ export default class Tasks extends React.Component<IProp, IState> {
     this.props.deleteTask(rowID as string);
   }
 
+  public async toggleAttachSubtask(task: ITask, subtask: ITask): Promise<void> {
+    await this.props.toggleAttachSubtask(task, subtask);
+    this.closeSubtaskSelection();
+  }
+
+  public openSubtaskSelection(subtaskSelection: ITask) {
+    this.setState({ subtaskSelection });
+  }
+
+  public closeSubtaskSelection() {
+    this.setState({ subtaskSelection: undefined });
+  }
+
   public render() {
     const tasks: SwipeableListViewDataSource = this.state.tasks;
+    const subtaskSelection: ITask | undefined = this.state.subtaskSelection;
 
     if (tasks.getDataSource().getRowCount() === 0) {
       return null;
     } else {
       return (
-        <SwipeableListView
-          dataSource={tasks}
-          renderRow={row => <Task initialTask={row} />}
-          bounceFirstRowOnMount={true}
-          maxSwipeDistance={124}
-          renderQuickActions={(
-            rowData: any,
-            sectionID: string | number,
-            rowID: string | number
-          ) => this.quickActions(rowData, sectionID, rowID)}
-        />
+        <View>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.subtaskSelection !== undefined}
+            onRequestClose={() => {
+              /**/
+            }}
+          >
+            <TaskSelector
+              title={
+                "Select subtask of " +
+                (subtaskSelection ? subtaskSelection.name : "")
+              }
+              close={() => this.closeSubtaskSelection()}
+              selectTask={subtask =>
+                subtaskSelection
+                  ? this.toggleAttachSubtask(subtaskSelection, subtask)
+                  : Promise.resolve()
+              }
+              tasksGetter={() =>
+                Promise.resolve(
+                  subtaskSelection ? subtaskSelection.subtasks : []
+                )
+              }
+            />
+          </Modal>
+          <SwipeableListView
+            dataSource={tasks}
+            renderRow={row => (
+              <Task
+                initialTask={row}
+                subtasksIds={this.props.subtasksIds[row.id]}
+              />
+            )}
+            bounceFirstRowOnMount={true}
+            maxSwipeDistance={124}
+            renderQuickActions={(
+              rowData: any,
+              sectionID: string | number,
+              rowID: string | number
+            ) => this.quickActions(rowData, sectionID, rowID)}
+          />
+        </View>
       );
     }
   }

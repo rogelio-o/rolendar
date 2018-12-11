@@ -7,4 +7,6 @@ export default interface IDay {
   category?: ICategory;
 
   tasks: ITask[];
+
+  subtasksIds: { [key: string]: string[] };
 }

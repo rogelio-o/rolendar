@@ -23,7 +23,7 @@ export const findDayByDate = async (date: Date): Promise<IDay> => {
       baseZeroWeekDay === 0 ? 6 : baseZeroWeekDay - 1
     );
 
-    return { date, category: weekDay.category, tasks: [] };
+    return { date, category: weekDay.category, tasks: [], subtasksIds: {} };
   } else {
     const raw: IDayRaw = JSON.parse(str);
 
@@ -33,6 +33,7 @@ export const findDayByDate = async (date: Date): Promise<IDay> => {
         ? await findCategoryById(raw.categoryId)
         : undefined,
       tasks: await Promise.all(raw.tasksIds.map(findTaskById)),
+      subtasksIds: raw.subtasksIds,
     };
   }
 };
@@ -41,6 +42,7 @@ export const saveDay = async (day: IDay): Promise<void> => {
   const raw: IDayRaw = {
     categoryId: day.category ? day.category.id : undefined,
     tasksIds: day.tasks.map(t => t.id),
+    subtasksIds: day.subtasksIds,
   };
 
   await AsyncStorage.setItem(KEY + formatDate(day.date), JSON.stringify(raw));
