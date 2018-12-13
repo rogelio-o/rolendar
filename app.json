@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "rolendar",
-    "description": "This project is really great.",
+    "description": "Custom calendar.",
     "slug": "rolendar",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -14,14 +14,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"],
+      "sourceExts": ["ts", "tsx"],
+      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.rogelioorts.rolendar",
+      "supportsTablet": false
     }
   }
 }
