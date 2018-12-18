@@ -4,35 +4,77 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 typedef void ColorSelector(Color color);
 
-class FormColorPicker extends StatefulWidget {
+class FormColorPicker extends FormField<Color> {
 
-  final ColorSelector colorSelector;
-
-  final Color initialColor;
-
-  FormColorPicker({Key key, @required this.colorSelector, this.initialColor: const Color(0xff443a49)}): super(key: key);
+  FormColorPicker({
+    Key key,
+    FormFieldSetter<Color> onSaved,
+    FormFieldValidator<Color> validator,
+    Color initialValue: const Color(0xff000000),
+    bool autovalidate = false,
+    bool enabled = true,
+  }): super(
+    key: key,
+    builder: (FormFieldState<Color> field) {
+      return _ColorPicker(
+        onChange: field.didChange,
+        initialValue: field.value,
+      );
+    },
+    onSaved: onSaved,
+    validator: validator,
+    initialValue: initialValue,
+    autovalidate: autovalidate,
+    enabled: enabled
+  );
 
   @override
-  State<StatefulWidget> createState() => _FormColorPickerState(
-    colorSelector: colorSelector,
-    selectedColor: initialColor
-  );
+  FormFieldState<Color> createState() => FormFieldState<Color>();
+
 }
 
-class _FormColorPickerState extends State {
+class _ColorPicker extends StatefulWidget {
 
-  final ColorSelector colorSelector;
+  final ColorSelector onChange;
 
-  Color selectedColor;
+  final Color initialValue;
 
-  _FormColorPickerState({@required this.colorSelector, this.selectedColor});
+  _ColorPicker({Key key, @required this.onChange, @required this.initialValue}): super(key: key);
+
+  @override
+  State<_ColorPicker> createState() => _FormColorPickerState();
+
+}
+
+class _FormColorPickerState extends State<_ColorPicker> {
+
+  Color _selectedColor;
+
+  Color _value;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedColor = widget.initialValue;
+    _value = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Expanded(
+          child: Container(
+            height: 35,
+            color: _value,
+            margin: EdgeInsets.only(right: 10),
+          ),
+        ),
         FlatButton(
           child: Text('Select a color'),
+          color: Theme.of(context).primaryColor,
+          textColor: Theme.of(context).primaryTextTheme.title.color,
           onPressed: _openDialog
         )
       ],
@@ -47,7 +89,7 @@ class _FormColorPickerState extends State {
           title: const Text('Pick a color!'),
           content: SingleChildScrollView(
             child: ColorPicker(
-              pickerColor: selectedColor,
+              pickerColor: _value,
               onColorChanged: changeColor,
               enableLabel: true,
               pickerAreaHeightPercent: 0.8,
@@ -61,7 +103,8 @@ class _FormColorPickerState extends State {
             FlatButton(
               child: Text("Save", style: TextStyle(fontWeight: FontWeight.bold)),
               onPressed: () {
-                colorSelector(selectedColor);
+                _value = _selectedColor;
+                widget.onChange(_value);
                 Navigator.of(context).pop();
               }
             )
@@ -73,7 +116,7 @@ class _FormColorPickerState extends State {
 
   changeColor(Color color) {
     setState(() {
-      selectedColor = color;
+      _selectedColor = color;
     });
   }
 
