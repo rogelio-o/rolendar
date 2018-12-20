@@ -10,7 +10,7 @@ class FormColorPicker extends FormField<Color> {
     Key key,
     FormFieldSetter<Color> onSaved,
     FormFieldValidator<Color> validator,
-    Color initialValue: const Color(0xff000000),
+    Color initialValue,
     bool autovalidate = false,
     bool enabled = true,
   }): super(
@@ -23,7 +23,7 @@ class FormColorPicker extends FormField<Color> {
     },
     onSaved: onSaved,
     validator: validator,
-    initialValue: initialValue,
+    initialValue: initialValue == null ? const Color(0xff000000) : initialValue,
     autovalidate: autovalidate,
     enabled: enabled
   );

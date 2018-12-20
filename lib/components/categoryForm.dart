@@ -10,7 +10,16 @@ class CategoryForm extends StatefulWidget {
 
   final FormSubmitter submitter;
 
-  CategoryForm({@required this.title, @required this.submitter});
+  final String initialName;
+
+  final String initialColor;
+
+  CategoryForm({
+    @required this.title,
+    @required this.submitter,
+    this.initialName,
+    this.initialColor
+  });
 
   @override
   State<StatefulWidget> createState() => _CategoryFormState();
@@ -24,6 +33,16 @@ class _CategoryFormState extends State<CategoryForm> {
   String _name;
 
   Color _color;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _name = widget.initialName;
+    if(widget.initialColor != null) {
+      _color = Color(int.parse(widget.initialColor));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +74,7 @@ class _CategoryFormState extends State<CategoryForm> {
               margin: EdgeInsets.only(bottom: 20),
               child: TextFormField(
                 validator: (value) => value.isEmpty ? 'Name is required.' : null,
+                initialValue: _name,
                 onSaved: (value) => _name = value,
                 decoration: InputDecoration(
                   hintText: 'Name'
@@ -64,6 +84,7 @@ class _CategoryFormState extends State<CategoryForm> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: FormColorPicker(
+                initialValue: _color,
                 onSaved: (value) => _color = value,
               ),
             )

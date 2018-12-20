@@ -8,8 +8,11 @@ class Category {
 
   String color;
 
-  Category({@required this.id, @required this.name, @required this.color});
+  Category({this.id, @required this.name, @required this.color});
 
-  dynamic toJson() => {'id': id, 'name': name, 'color': color};
+  Category.fromRow(Map<String, dynamic> json):
+    id = json['id'].toString(),
+    name = json['name'],
+    color = json['color'];
 
 }
