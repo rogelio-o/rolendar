@@ -1,18 +1,23 @@
 import 'package:sqflite/sqflite.dart';
 import '../models/category.dart';
+import 'TasksRepository.dart';
 
 class CategoriesRepository {
 
   Database _db;
 
-  CategoriesRepository(Database db):
-      _db = db;
+  TasksRepository _tasksRepository;
+
+  CategoriesRepository(Database db, TasksRepository tasksRepository):
+      _db = db,
+      _tasksRepository = tasksRepository;
 
   Future<void> delete(String id) async {
     await _db.rawDelete(
       'DELETE FROM Categories WHERE id = ?',
       [id]
     );
+    await _tasksRepository.deleteByCategoriesId(id);
   }
 
   Future<void> save(Category category) async {

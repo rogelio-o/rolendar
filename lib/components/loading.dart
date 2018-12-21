@@ -28,10 +28,14 @@ void hideLoading(BuildContext context) {
   Navigator.of(context, rootNavigator: true).pop('dialog');
 }
 
-Widget LoadingPage(BuildContext context) {
-  return Center(
-    child: new CircularProgressIndicator(
-      backgroundColor: Theme.of(context).primaryColor,
-    ),
-  );
+class LoadingPage extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Center(
+      child: new CircularProgressIndicator(
+        backgroundColor: Theme
+          .of(context)
+          .primaryColor,
+      ),
+    );
+  }
 }

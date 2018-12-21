@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rolendar/screens/calendar/calendar.dart';
-import 'package:rolendar/screens/tasks/tasks.dart';
+import 'package:rolendar/screens/categories/categories.dart';
 import 'package:rolendar/screens/settings/settings.dart';
 
 class Layout extends StatefulWidget {
@@ -48,7 +48,7 @@ class _LayoutState extends State<Layout> {
   Widget _buildBody() {
     switch(_currentIndex) {
       case 1:
-        return TasksScreen();
+        return CategoriesScreen();
       case 2:
         return SettingsScreen();
       case 0:
