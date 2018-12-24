@@ -77,6 +77,7 @@ class _TaskFormState extends State<TaskForm> {
                 decoration: InputDecoration(
                   hintText: 'Name'
                 ),
+                textCapitalization: TextCapitalization.sentences,
               ),
             ),
             Container(
@@ -88,6 +89,7 @@ class _TaskFormState extends State<TaskForm> {
                 decoration: InputDecoration(
                   hintText: 'Description'
                 ),
+                textCapitalization: TextCapitalization.sentences,
               ),
             ),
           ],

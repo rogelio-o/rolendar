@@ -79,6 +79,7 @@ class _CategoryFormState extends State<CategoryForm> {
                 decoration: InputDecoration(
                   hintText: 'Name'
                 ),
+                textCapitalization: TextCapitalization.sentences,
               ),
             ),
             Container(

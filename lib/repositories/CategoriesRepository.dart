@@ -44,6 +44,18 @@ class CategoriesRepository {
     return rows.map((row) => Category.fromRow(row)).toList();
   }
 
+  Future<Category> findById(String id) async {
+    final List<Map<String, dynamic>> rows = await _db.rawQuery(
+      'SELECT * FROM Categories WHERE id = ?',
+      [id]
+    );
+    if(rows.length == 0) {
+      return null;
+    } else {
+      return Category.fromRow(rows[0]);
+    }
+  }
+
   static Future<void> createTable(Database db) async {
     await db.execute(
       'DROP TABLE IF EXISTS category');

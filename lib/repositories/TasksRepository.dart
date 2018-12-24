@@ -8,20 +8,32 @@ class TasksRepository {
   TasksRepository(Database db):
       _db = db;
 
-  Future<List<Task>> findAllByCategory(String categoryId) async {
+  Future<List<Task>> findAllUndoneByCategory(String categoryId) async {
     final List<Map<String, dynamic>> rows = await _db.rawQuery(
-      'SELECT * FROM Tasks WHERE categoryId = ? ORDER BY id ASC',
+      'SELECT * FROM Tasks WHERE categoryId = ? AND done = 0 ORDER BY id ASC',
       [categoryId]
     );
     return rows.map((row) => Task.fromRow(row)).toList();
   }
 
-  Future<List<Task>> findAllByParentTask(String parentTaskId) async {
+  Future<List<Task>> findAllUndoneByParentTask(String parentTaskId) async {
     final List<Map<String, dynamic>> rows = await _db.rawQuery(
-      'SELECT * FROM Tasks WHERE parentId = ? ORDER BY id ASC',
+      'SELECT * FROM Tasks WHERE parentId = ? AND done = 0 ORDER BY id ASC',
       [parentTaskId]
     );
     return rows.map((row) => Task.fromRow(row)).toList();
+  }
+
+  Future<Task> findById(String taskId) async {
+    final List<Map<String, dynamic>> rows = await _db.rawQuery(
+      'SELECT * FROM Tasks WHERE id = ?',
+      [taskId]
+    );
+    if(rows.length == 0) {
+      return null;
+    } else {
+      return Task.fromRow(rows[0]);
+    }
   }
 
   Future<void> save(Task task) async {

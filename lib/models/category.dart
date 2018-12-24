@@ -15,4 +15,9 @@ class Category {
     name = json['name'],
     color = json['color'];
 
+  @override
+  String toString() {
+    return "[id: $id, name: $name, color: $color]";
+  }
+
 }

@@ -61,9 +61,9 @@ class TasksScreenState extends State<TasksScreen> {
 
   Future<List<Task>> _loadTasks(BuildContext context) {
     if(widget.task == null) {
-      return widget.repositories.tasks.findAllByCategory(widget.category.id);
+      return widget.repositories.tasks.findAllUndoneByCategory(widget.category.id);
     } else {
-      return widget.repositories.tasks.findAllByParentTask(widget.task.id);
+      return widget.repositories.tasks.findAllUndoneByParentTask(widget.task.id);
     }
   }
 
