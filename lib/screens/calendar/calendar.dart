@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import '../../utils/dateUtils.dart';
 import 'dayView.dart';
+import '../info/info.dart';
 
 class CalendarScreen extends StatefulWidget {
 
@@ -45,6 +46,21 @@ class CalendarScreenState extends State<CalendarScreen> {
       appBar: AppBar(
         title: Text('${getMonthName(_currentMonday.month)} ${_currentMonday.year}'),
         bottom: _buildBottomAppBar(context),
+        actions: <Widget>[
+          FlatButton(
+            child: Icon(
+              Icons.info,
+              color: Theme.of(context).primaryTextTheme.title.color
+            ),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InfoScreen(),
+                fullscreenDialog: true
+              )
+            )
+          )
+        ],
       ),
       body: DayView(date: _selectedDate),
     );

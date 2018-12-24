@@ -18,6 +18,8 @@ dependencies:
   flutter_colorpicker: any
   flutter_slidable: "^0.4.9"
   sqflite: any
+  url_launcher: "^4.0.3"
+  material_design_icons_flutter: "^3.0.3289"
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2

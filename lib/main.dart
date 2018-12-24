@@ -37,6 +37,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rolendar',
       theme: ThemeData(
         primarySwatch: Colors.red,
