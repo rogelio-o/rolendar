@@ -24,6 +24,22 @@ class TasksRepository {
     return rows.map((row) => Task.fromRow(row)).toList();
   }
 
+  Future<List<Task>> findAllDoneByCategory(String categoryId) async {
+    final List<Map<String, dynamic>> rows = await _db.rawQuery(
+      'SELECT * FROM Tasks WHERE categoryId = ? AND done = 1 ORDER BY id ASC',
+      [categoryId]
+    );
+    return rows.map((row) => Task.fromRow(row)).toList();
+  }
+
+  Future<List<Task>> findAllDoneByParentTask(String parentTaskId) async {
+    final List<Map<String, dynamic>> rows = await _db.rawQuery(
+      'SELECT * FROM Tasks WHERE parentId = ? AND done = 1 ORDER BY id ASC',
+      [parentTaskId]
+    );
+    return rows.map((row) => Task.fromRow(row)).toList();
+  }
+
   Future<Task> findById(String taskId) async {
     final List<Map<String, dynamic>> rows = await _db.rawQuery(
       'SELECT * FROM Tasks WHERE id = ?',

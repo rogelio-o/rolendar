@@ -272,6 +272,7 @@ class DayViewState extends State<DayView> {
         border: new Border(top: BorderSide(color: Colors.grey[200]))
       ),
       child: ListTile(
+        enabled: !task.done,
         leading: Checkbox(
           value: task.done,
           onChanged: (value) => _updateDone(index, task, value)

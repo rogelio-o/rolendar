@@ -26,44 +26,53 @@ class TasksScreenState extends State<TasksScreen> {
 
   bool _loading;
 
-  List<Task> _tasks;
+  List<Task> _undoneTasks;
+
+  List<Task> _doneTasks = [];
+
+  bool _showDoneTasks = false;
 
   @override
   void initState() {
     super.initState();
 
-    _loadData(context);
+    _loadData(context, false);
   }
 
-  void _loadData(BuildContext context) {
+  void _loadData(BuildContext context, bool showDoneTasks) async {
     setState(() {
       _loading = true;
     });
 
-    _loadTasks(context)
-      .then((List<Task> tasks) {
-        try {
-          setState(() {
-            _tasks = tasks;
-            _loading = false;
-          });
-        } catch(e) {
-          print(e);
-        }
-      })
-      .catchError((e) {
-        print(e);
-        setState(() {
-          _loading = false;
-        });
+    try {
+      final List<Task> undoneTasks = await _loadUndoneTasks(context);
+      final List<Task> doneTasks = showDoneTasks ? await _loadDoneTasks(context) : [];
+      setState(() {
+        _undoneTasks = undoneTasks;
+        _doneTasks = doneTasks;
+        _showDoneTasks = showDoneTasks;
+        _loading = false;
       });
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
-  Future<List<Task>> _loadTasks(BuildContext context) {
+  Future<List<Task>> _loadUndoneTasks(BuildContext context) {
     if(widget.task == null) {
       return widget.repositories.tasks.findAllUndoneByCategory(widget.category.id);
     } else {
       return widget.repositories.tasks.findAllUndoneByParentTask(widget.task.id);
+    }
+  }
+
+  Future<List<Task>> _loadDoneTasks(BuildContext context) {
+    if(widget.task == null) {
+      return widget.repositories.tasks.findAllDoneByCategory(widget.category.id);
+    } else {
+      return widget.repositories.tasks.findAllDoneByParentTask(widget.task.id);
     }
   }
 
@@ -80,7 +89,7 @@ class TasksScreenState extends State<TasksScreen> {
                   category: widget.category,
                   parentTask: widget.task
                 )))
-                .then((insert) => insert != null && insert ? _loadData(context) : null);
+                .then((insert) => insert != null && insert ? _loadData(context, _showDoneTasks) : null);
             },
           ),
         ]
@@ -98,12 +107,22 @@ class TasksScreenState extends State<TasksScreen> {
   }
 
   Widget _buildList(BuildContext context) {
+    final int countUndone = _undoneTasks.length;
+    final int count = countUndone + (_showDoneTasks ? _doneTasks.length : 1);
     return ListView.builder(
-      itemCount: _tasks.length,
+      itemCount: count,
       itemBuilder: (context, index) {
-        final Task task = _tasks[index];
+        if(index < countUndone) {
+          final Task task = _undoneTasks[index];
 
-        return _buildItem(context, index, task);
+          return _buildItem(context, index, task);
+        } else if(_showDoneTasks) {
+          final Task task = _doneTasks[index - countUndone];
+
+          return _buildItem(context, index, task);
+        } else {
+          return _buildShowDoneButton(context);
+        }
       }
     );
   }
@@ -140,6 +159,7 @@ class TasksScreenState extends State<TasksScreen> {
           border: new Border(bottom: BorderSide(color: Colors.grey[200]))
         ),
         child: new ListTile(
+          enabled: !item.done,
           leading: Checkbox(
             value: item.done,
             onChanged: (value) => _updateDone(context, item, value),
@@ -180,20 +200,38 @@ class TasksScreenState extends State<TasksScreen> {
 
   _goToUpdate(BuildContext context, Task task) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateTaskScreen(task)))
-      .then((insert) => insert != null && insert ? _loadData(context) : null);
+      .then((insert) => insert != null && insert ? _loadData(context, _showDoneTasks) : null);
   }
 
   _delete(BuildContext context, int index) {
     showLoading(context);
 
-    widget.repositories.tasks.delete(_tasks[index].id)
+    widget.repositories.tasks.delete(_undoneTasks[index].id)
       .then((_) {
       hideLoading(context);
 
       setState(() {
-        _tasks.removeAt(index);
+        _undoneTasks.removeAt(index);
       });
     }).catchError((_) => hideLoading(context));
+  }
+
+  Widget _buildShowDoneButton(BuildContext context) {
+    return Container(
+      child: FlatButton(
+        onPressed: _enableShowDoneTasks,
+        child: Text(
+          'Show done tasks',
+          style: TextStyle(
+            color: Colors.grey
+          ),
+        )
+      ),
+    );
+  }
+
+  _enableShowDoneTasks() {
+    _loadData(context, true);
   }
 
 }
