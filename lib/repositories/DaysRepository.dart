@@ -41,7 +41,11 @@ class DaysRepository {
   }
 
   String _formatDate(DateTime date) {
-    return "${date.year}-${date.month}-${date.day}";
+    return "${date.year}-${addZero(date.month)}-${addZero(date.day)}";
+  }
+
+  String addZero(int n) {
+    return (n < 10 ? '0' : '') + n.toString();
   }
 
   static Future<void> createTable(Database db) async {
