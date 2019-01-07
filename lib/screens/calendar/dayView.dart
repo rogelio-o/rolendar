@@ -68,7 +68,8 @@ class DayViewState extends State<DayView> {
         _category = category;
         _tasks = tasks;
       });
-    } catch(e) {
+    } catch(e, stacktrace) {
+      print(stacktrace);
       setState(() {
         _loading = false;
       });
