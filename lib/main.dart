@@ -27,7 +27,7 @@ class MyAppState extends State<MyApp> {
         setState(() {
           _loading = false;
         });
-      }).catchError(() {
+      }).catchError((Object error) {
         setState(() {
         _loading = false;
         });
@@ -37,7 +37,6 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Rolendar',
       theme: ThemeData(
         primarySwatch: Colors.red,
